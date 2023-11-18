@@ -9,10 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SpringBootTest
 public class CbrTests {
@@ -88,7 +85,7 @@ public class CbrTests {
         System.out.println(arrayList.toString());
         for (int i = 0; i < arrayList.size()-1; i++) {
 
-            if (arrayList.get(i) == arrayList.get(i + 1)) {
+            if (Objects.equals(arrayList.get(i), arrayList.get(i + 1))) {
                 System.out.println(arrayList.get(i));
 
             }
