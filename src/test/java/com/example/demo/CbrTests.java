@@ -91,6 +91,7 @@ public class CbrTests {
             }
         }
         System.out.println("Done!");
+        System.out.println("Картошка");
     }
 
 
