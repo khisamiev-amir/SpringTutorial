@@ -93,6 +93,7 @@ public class CbrTests {
 
             }
         }
+        System.out.println("Done!");
     }
 
 
