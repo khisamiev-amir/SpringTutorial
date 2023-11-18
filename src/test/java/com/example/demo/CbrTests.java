@@ -31,9 +31,9 @@ public class CbrTests {
     @Test
     public void test1() {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://reqres.in/api/users?page=2";
+        String URL = "https://reqres.in/api/users?page=2";
 
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(URL, String.class);
 
         HttpStatusCode httpStatusCode = HttpStatus.OK;
         HttpStatusCode statusCode = responseEntity.getStatusCode();
