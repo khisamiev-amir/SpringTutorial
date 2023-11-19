@@ -83,7 +83,7 @@ public class CbrTests {
 
         Collections.sort(arrayList);
         System.out.println(arrayList.toString());
-        for (int i = 0; i < arrayList.size()-1; i++) {
+        for (int i = 0; i < arrayList.size() - 1; i++) {
 
             if (Objects.equals(arrayList.get(i), arrayList.get(i + 1))) {
                 System.out.println(arrayList.get(i));
@@ -95,6 +95,77 @@ public class CbrTests {
         System.out.println("Морковь");
     }
 
+    @Test
+    public void SortListInteger() {
+        List<Integer> list = Arrays.asList(3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5);
+        ArrayList<Integer> arrayList = new ArrayList<>(list);
+        ArrayList<Integer> evenArrayList = new ArrayList<>();
+        ArrayList<Integer> oddArrayList = new ArrayList<>();
+        for (int i = 0; i < arrayList.size(); i++) {
 
+            if (arrayList.get(i) % 2 == 0) {
+                oddArrayList.add(arrayList.get(i));
+            } else {
+                evenArrayList.add(arrayList.get(i));
+            }
+        }
+
+        ArrayList<Integer> resultArrayList = new ArrayList<>();
+        resultArrayList.addAll(oddArrayList);
+        resultArrayList.addAll(evenArrayList);
+        System.out.println(resultArrayList);
+    }
+
+    @Test
+    public void lengthOfLastWord() {
+        String s = "Отправь меня на Луну";
+        int sLength = 0;
+        for (int i = s.length() - 1; i > 0; i--) {
+            if (s.charAt(i) != ' ') {
+                sLength++;
+            } else if (s.charAt(i) == ' ') {
+                break;
+
+            }
+
+        }
+        System.out.println(s.substring(s.length() - sLength, s.length()));
+    }
+
+    @Test
+    public void bubbleSort() {
+        List<Integer> list = Arrays.asList(3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5);
+        for (int j = 0; j < list.size(); j++) {
+
+
+        for (int i = 0; i < list.size()-1; i++) {
+            if (list.get(i)> list.get(i+1)){
+                Integer integer = list.get(i);
+                list.set(i, list.get(i+1));
+                list.set(i+1,integer);
+            }
+        }
+        }
+        System.out.println(list);
+    }
+
+    @Test
+    public void searchValue(){
+        RestTemplate restTemplate = new RestTemplate();  //ВСЕГДА СОЗДАЕМ, ПРОСТО ЗАПОМНИ
+        String URL = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m"; //ВСЕГДА СОЗДАЕМ, ПРОСТО ЗАПОМНИ
+        ResponseEntity <String> responseEntity = restTemplate.getForEntity(URL, String.class); //ВСЕГДА ResponseEntity, всегда <String> , всгеда внутри вот так (URL, String.class)
+        HttpStatusCode httpStatusCode = HttpStatus.OK; //ВСЕГДА СОЗДАЕМ, ПРОСТО ЗАПОМНИ
+        HttpStatusCode statusCode = responseEntity.getStatusCode(); //ВСЕГДА СОЗДАЕМ, ПРОСТО ЗАПОМНИ
+        Assertions.assertEquals(httpStatusCode, statusCode, "Статус код не равен 200ОК"); //ВСЕГДА СОЗДАЕМ, ПРОСТО ЗАПОМНИ
+
+        JSONObject jsonObject = new JSONObject(responseEntity.getBody());
+        JSONArray jsonArray = jsonObject.getJSONObject("hourly").getJSONArray("temperature_2m");
+        List<Double> doubleList = new ArrayList<>();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            doubleList.add(jsonArray.getDouble(i));
+        }
+        Assertions.assertTrue(doubleList.contains(3.8), "Массив не содержит значение 3.8");
+    }
 }
 
