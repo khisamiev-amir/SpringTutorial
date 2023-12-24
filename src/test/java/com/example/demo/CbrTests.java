@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URL;
 import java.util.*;
 
 @SpringBootTest
@@ -138,22 +139,22 @@ public class CbrTests {
         for (int j = 0; j < list.size(); j++) {
 
 
-        for (int i = 0; i < list.size()-1; i++) {
-            if (list.get(i)> list.get(i+1)){
-                Integer integer = list.get(i);
-                list.set(i, list.get(i+1));
-                list.set(i+1,integer);
+            for (int i = 0; i < list.size() - 1; i++) {
+                if (list.get(i) > list.get(i + 1)) {
+                    Integer integer = list.get(i);
+                    list.set(i, list.get(i + 1));
+                    list.set(i + 1, integer);
+                }
             }
-        }
         }
         System.out.println(list);
     }
 
     @Test
-    public void searchValue(){
+    public void searchValue() {
         RestTemplate restTemplate = new RestTemplate();  //ВСЕГДА СОЗДАЕМ, ПРОСТО ЗАПОМНИ
         String URL = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m"; //ВСЕГДА СОЗДАЕМ, ПРОСТО ЗАПОМНИ
-        ResponseEntity <String> responseEntity = restTemplate.getForEntity(URL, String.class); //ВСЕГДА ResponseEntity, всегда <String> , всгеда внутри вот так (URL, String.class)
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(URL, String.class); //ВСЕГДА ResponseEntity, всегда <String> , всгеда внутри вот так (URL, String.class)
         HttpStatusCode httpStatusCode = HttpStatus.OK; //ВСЕГДА СОЗДАЕМ, ПРОСТО ЗАПОМНИ
         HttpStatusCode statusCode = responseEntity.getStatusCode(); //ВСЕГДА СОЗДАЕМ, ПРОСТО ЗАПОМНИ
         Assertions.assertEquals(httpStatusCode, statusCode, "Статус код не равен 200ОК"); //ВСЕГДА СОЗДАЕМ, ПРОСТО ЗАПОМНИ
@@ -167,5 +168,128 @@ public class CbrTests {
         }
         Assertions.assertTrue(doubleList.contains(3.8), "Массив не содержит значение 3.8");
     }
+
+    @Test
+    public void doubleSymbol() {
+        String s = "PAPA";
+
+        List<Character> list = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            list.add(s.charAt(i));
+        }
+        Collections.sort(list);
+        if (list.get(0) == list.get(1) && list.get(2) == list.get(3) && list.get(0) != list.get(2)) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
+    }
+
+    @Test
+    public void sortStrings() {
+        List<String> list = Arrays.asList("flower", "flow", "flight", "flow");
+        List<String> sortedList = new ArrayList<>();
+        sortedList.add(list.get(0));
+        for (int i = 1; i < list.size(); i++) {
+            if (!sortedList.contains(list.get(i))) {
+                sortedList.add(list.get(i));
+            }
+        }
+        System.out.println(sortedList);
+
+
+    }
+
+    @Test
+    public void sortStringsList() {
+        List<String> list = Arrays.asList("flower", "flow", "flight", "flow");
+        Collections.sort(list);
+        System.out.println(list);
+    }
+
+    @Test
+    public void invertNumber() {
+        Integer integer = 654321;
+        String string = String.valueOf(integer);
+        System.out.println(string);
+        String invertNumber = "";
+        for (int i = string.length() - 1; i >= 0; i--) {
+            invertNumber = invertNumber + string.charAt(i);
+        }
+        System.out.println(invertNumber);
+    }
+
+
+    @Test
+    public void Test123() {
+        RestTemplate restTemplate1 = new RestTemplate();
+        String url = "https://api.innoprog.ru:3000/subscription/429272623";
+        ResponseEntity<String> responseEntity = restTemplate1.getForEntity(url, String.class);
+        JSONObject jsonObject = new JSONObject(responseEntity);
+        JSONArray jsonArray = jsonObject.getJSONArray("subscriptions");
+        Integer result = 0;
+        for (int i = 0; i < jsonArray.length(); i++) {
+            result = result + ((JSONObject) jsonArray.get(i)).getInt("remaining_office_hours");
+        }
+        Assertions.assertEquals(result, 13, "Не равно 13");
+
+
+    }
+
+    @Test
+    public void Test1234() {
+        List<Integer> list1 = Arrays.asList(1, 2, 3, 4, 64, 3, 7, 3, 4, 2, 4);
+        List<Integer> list2 = Arrays.asList(1, 2, 3, 4, 5, 1, 2, 2, 3, 4, 5);
+        for (int i = 0; i < list1.size(); i++) {
+            if (!list2.contains(list1.get(i))) {
+
+            }
+        }
+    }
+
+    @Test
+    public void twoSum() {
+        int[] nums = {3, 2, 4};
+        int target = 6;
+        int[] result = new int[2];
+        Map<Integer, Integer> map = new HashMap<>();
+        Integer[] integerArray = new Integer[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            integerArray[i] = nums[i];
+        }
+        for (int i = 0; i < integerArray.length; i++) {
+            Integer value = target - integerArray[i];
+            List<Integer> list = new ArrayList<>(Arrays.asList(integerArray));
+            if (list.contains(value) && value != integerArray[i]) {
+                result[0] = list.indexOf(integerArray[i]);
+                result[1] = list.indexOf(value);
+                break;
+
+            } else {
+                result[0] = list.indexOf(integerArray[i]);
+                list.set(i, value - 1);
+
+                result[1] = list.indexOf(value);
+                break;
+            }
+        }
+        System.out.println(Arrays.toString(result));
+
+    }
+
+    @Test
+    public void twoSum2() {
+        int[] nums = {3, 2, 4};
+        int target = 6;
+        int[] result = new int[2];
+        Map<Integer, Integer> map = new HashMap<>();
+
+
+    }
+
+
+
+
+
 }
 
